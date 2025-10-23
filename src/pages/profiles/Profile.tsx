@@ -1,9 +1,29 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Admin from "./admin/Admin";
+import { UserStore } from "../../store/user.store";
 
-export default function Profile({ user }) {
+export default function Profile() {
+  const { profile, user } = UserStore();
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    try {
+      const fetchUser = async () => {
+        await profile();
+        setLoading(false);
+      };
+      fetchUser();
+    } catch (error) {
+      console.log(error);
+    } finally {
+      if (loading) {
+        setLoading(false);
+      }
+    }
+  }, []);
+
   const Page = () => {
-    switch (user.role) {
+    switch (user?.role) {
       case "student":
         return <div>Student</div>;
       case "mentor":
@@ -12,6 +32,10 @@ export default function Profile({ user }) {
         return <Admin />;
     }
   };
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div>

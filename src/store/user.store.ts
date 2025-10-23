@@ -85,7 +85,7 @@ export const UserStore = create<uStore>((set) => {
         }
         set({ message: res.data.message });
 
-        return { success: res.data.success };
+        return { success: true };
       } catch (error) {
         set({
           message: error?.response.data.message || "Something went wrong",

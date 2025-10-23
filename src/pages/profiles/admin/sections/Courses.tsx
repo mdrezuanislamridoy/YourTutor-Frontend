@@ -182,9 +182,8 @@ export default function Courses() {
   return (
     <>
       <div className="space-y-8">
-        {/* Top Section: Search and Add Button */}
         <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-          {/* Search Bar */}
+
           <form
             onSubmit={handleSearchSubmit}
             className="w-full md:w-2/3 relative"
@@ -204,7 +203,6 @@ export default function Courses() {
             </button>
           </form>
 
-          {/* Add Course Button */}
           <button
             onClick={() => setIsModalOpen(true)}
             className="w-full md:w-auto flex items-center justify-center space-x-2 px-6 py-3 bg-teal-500 text-white font-semibold rounded-lg hover:bg-teal-600 transition duration-300 shadow-md"
@@ -239,7 +237,6 @@ export default function Courses() {
           </div>
         )}
 
-        {/* Pagination */}
         <div className="flex justify-center items-center space-x-4 pt-4">
           <button
             onClick={handlePrevPage}
@@ -261,11 +258,11 @@ export default function Courses() {
         </div>
       </div>
 
-      {/* Add Course Modal */}
+      
       <AddCourseModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        onCourseAdded={() => loadCourses(1)} // Refresh courses on page 1 after creation
+        onCourseAdded={() => loadCourses(1)} 
       />
     </>
   );

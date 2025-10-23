@@ -22,10 +22,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/auth" element={user ? <Navigate to={"/"} /> : <Auth />} />
-        <Route
-          path="/profile"
-          element={user ? <Profile user={user} /> : <Navigate to={"/auth"} />}
-        />
+        <Route path="/profile" element={<Profile user={user} />} />
       </Routes>
     </>
   );

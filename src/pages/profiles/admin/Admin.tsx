@@ -1,6 +1,5 @@
 import React from "react";
 import Dashboard from "./sections/Dashboard";
-import Users from "./sections/Users";
 import MentorRequests from "./sections/MentorRequests";
 import Courses from "./sections/Courses";
 import BlockedAccount from "./sections/BlockedAccount";
@@ -11,18 +10,23 @@ import {
   FaUsers,
   FaUserCheck,
   FaBan,
+  FaUser,
+  FaUsersSlash,
+  FaShoppingBag,
 } from "react-icons/fa";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { GiTargetPoster, GiTeacher } from "react-icons/gi";
 import { RiCouponFill } from "react-icons/ri";
 import { PiTreeStructure } from "react-icons/pi";
-import { GoBlocked } from "react-icons/go";
 import RejectedMentors from "./sections/RejectedMentors";
 import DeletedUsers from "./sections/DeletedUsers";
 import NoticeBoard from "./sections/NoticeBoard";
 import CategoryManage from "./sections/CategoryManage";
 import CouponManage from "./sections/CouponManage";
 import SidebarItem from "./components/SidebarItems";
+import Mentors from "./sections/Mentors";
+import Students from "./sections/Students";
+import Products from "./sections/Products";
 
 export default function Admin() {
   const [selectedSection, setSelectedSection] = React.useState("dashboard");
@@ -38,19 +42,25 @@ export default function Admin() {
   const sections = [
     { title: "Dashboard", selection: "dashboard", icon: FaTachometerAlt },
     { title: "Courses", selection: "courses", icon: FaBook },
+    { title: "Product", selection: "products", icon: FaShoppingBag },
     {
       title: "Mentor Requests",
       selection: "mentor-requests",
       icon: FaUserCheck,
     },
-    { title: "Users", selection: "users", icon: FaUsers },
+    {
+      title: "Mentors",
+      selection: "mentors",
+      icon: FaUser,
+    },
+    { title: "Students", selection: "students", icon: FaUsers },
     { title: "Blocked Accounts", selection: "blocked-account", icon: FaBan },
     {
       title: "Rejected Mentors",
       selection: "rejected-mentors",
       icon: GiTeacher,
     },
-    { title: "Deleted Users", selection: "deleted-users", icon: GoBlocked },
+    { title: "Deleted Users", selection: "deleted-users", icon: FaUsersSlash },
 
     {
       title: "Notice Board Manager",
@@ -73,12 +83,16 @@ export default function Admin() {
     switch (selectedSection) {
       case "dashboard":
         return <Dashboard />;
-      case "users":
-        return <Users />;
+      case "students":
+        return <Students />;
+      case "mentors":
+        return <Mentors />;
       case "mentor-requests":
         return <MentorRequests />;
       case "courses":
         return <Courses />;
+      case "products":
+        return <Products />;
       case "blocked-account":
         return <BlockedAccount />;
       case "rejected-mentors":
@@ -97,9 +111,9 @@ export default function Admin() {
   };
 
   return (
-    <div className="flex min-h-screen bg-gray-50">
+    <div className="flex min-h-screen  bg-gray-50">
       <aside
-        className={`flex flex-col bg-white shadow-lg transition-all duration-300 ${
+        className={`flex  flex-col bg-white shadow-lg transition-all duration-300 ${
           isCollapsed ? "w-16" : "w-64"
         }`}
       >
