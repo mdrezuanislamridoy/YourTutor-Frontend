@@ -7,6 +7,7 @@ import Navbar from "./components/Navbar";
 import Profile from "./pages/profiles/Profile";
 import CoursesPage from "./pages/courses/CoursesPage";
 import Course from "./pages/course/Course";
+import Enrollment from "./pages/enrollment/Enrollment";
 
 export default function App() {
   const { profile, user } = UserStore();
@@ -30,6 +31,10 @@ export default function App() {
         />
         <Route path="/course" element={<Course />} />
         <Route path="/courses" element={<CoursesPage />} />
+        <Route
+          path="/enrollment/:id"
+          element={user ? <Enrollment /> : <Navigate to={"/auth"} />}
+        />
       </Routes>
     </>
   );
