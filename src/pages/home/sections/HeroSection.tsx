@@ -12,8 +12,8 @@ export default function HeroSection() {
   const tealColorClass = "bg-[#2FC4C0]";
 
   return (
-    <section className="relative w-full overflow-hidden">
-      <div className={`w-full ${tealColorClass} relative z-20`}>
+    <section className="relative w-full overflow-hidden -z-20">
+      <div className={`w-full ${tealColorClass} relative`}>
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-16 pb-32 relative">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="text-white space-y-6">

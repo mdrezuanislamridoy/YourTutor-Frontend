@@ -5,6 +5,8 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import Auth from "./pages/auth/Auth";
 import Navbar from "./components/Navbar";
 import Profile from "./pages/profiles/Profile";
+import CoursesPage from "./pages/courses/CoursesPage";
+import Course from "./pages/course/Course";
 
 export default function App() {
   const { profile, user } = UserStore();
@@ -22,7 +24,12 @@ export default function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/auth" element={user ? <Navigate to={"/"} /> : <Auth />} />
-        <Route path="/profile" element={<Profile user={user} />} />
+        <Route
+          path="/profile"
+          element={user ? <Profile /> : <Navigate to={"/auth"} />}
+        />
+        <Route path="/course" element={<Course />} />
+        <Route path="/courses" element={<CoursesPage />} />
       </Routes>
     </>
   );

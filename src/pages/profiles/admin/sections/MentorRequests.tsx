@@ -32,7 +32,7 @@ const MentorRequests: React.FC = () => {
     setError(null);
     try {
       const res = await getRequestedMentors();
-      // Handle common shapes safely
+
       const payload = res?.data ?? res;
       const reqs =
         Array.isArray(payload?.requests) && payload.requests
@@ -64,7 +64,6 @@ const MentorRequests: React.FC = () => {
 
   useEffect(() => {
     loadRequests();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -91,12 +90,10 @@ const MentorRequests: React.FC = () => {
           ? await approveMentor(id)
           : await rejectMentor(id);
 
-      // Accept both { success: true } or truthy result
       if (!result || result?.success === false) {
         throw new Error(result?.message || `Failed to ${actionType} mentor.`);
       }
 
-      // remove from UI immediately
       setRequests((prev) => prev.filter((r) => r._id !== id));
       setStatusMessage(
         actionType === "approve" ? "Mentor approved." : "Mentor rejected."
@@ -116,7 +113,6 @@ const MentorRequests: React.FC = () => {
         Pending Mentor Requests
       </h1>
 
-      {/* status / error */}
       {(error || statusMessage) && (
         <div
           className={`p-3 mb-6 rounded-lg border text-sm ${
@@ -132,7 +128,6 @@ const MentorRequests: React.FC = () => {
         </div>
       )}
 
-      {/* loading */}
       {isLoading && (
         <div className="py-12 flex justify-center items-center text-teal-600 gap-3">
           <FaClock className="animate-spin" />

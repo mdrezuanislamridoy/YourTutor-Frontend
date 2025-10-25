@@ -19,8 +19,8 @@ export default function Navbar({ bgColor = "transparent" }) {
 
   const navLinks = [
     { name: "Home", href: "/" },
-    { name: "Courses", href: "/courses" },
-    { name: "Careers", href: "/careers" },
+    { name: "Course", href: "/course" },
+    { name: "Career", href: "/career" },
     { name: "Blog", href: "/blog" },
     { name: "About Us", href: "/about" },
   ];
@@ -49,7 +49,7 @@ export default function Navbar({ bgColor = "transparent" }) {
             {user.name || "Profile"}
           </span>
           {showProfile && (
-            <div className="absolute top-10 right-0 bg-white shadow-lg p-4 rounded-md z-10 w-48 z-30">
+            <div className="absolute top-10 right-0 bg-white shadow-lg p-4 rounded-md w-48 z-50">
               <Link
                 to="/profile"
                 className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100"
@@ -79,7 +79,7 @@ export default function Navbar({ bgColor = "transparent" }) {
 
   return (
     <nav
-      className={`w-full ${bgColor} transition-all duration-300 ease-in-out`}
+      className={`w-full ${bgColor} sticky z-50 top-0 left-0 transition-all duration-300 ease-in-out`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">

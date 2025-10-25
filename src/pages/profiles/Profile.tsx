@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Admin from "./admin/Admin";
 import { UserStore } from "../../store/user.store";
+import Student from "./student/Student";
 
 export default function Profile() {
   const { profile, user } = UserStore();
@@ -25,7 +26,7 @@ export default function Profile() {
   const Page = () => {
     switch (user?.role) {
       case "student":
-        return <div>Student</div>;
+        return <Student />;
       case "mentor":
         return <div>Mentor</div>;
       default:
