@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { RiCloseCircleLine } from "react-icons/ri";
 import axiosInstance from "../../../../lib/axiosInstance";
 
