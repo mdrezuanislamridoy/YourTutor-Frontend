@@ -3,6 +3,7 @@ import AddCategoryModal from "./AddCategoryModal";
 import { IoIosWarning } from "react-icons/io";
 import axiosInstance from "../../../../lib/axiosInstance";
 import { useEffect, useState } from "react";
+import type { ICategory } from "../../../../types/category.types";
 
 const CategoryManage = () => {
   const [categories, setCategories] = useState([]);
@@ -10,7 +11,9 @@ const CategoryManage = () => {
   const [error, setError] = useState(null);
   const [statusMessage, setStatusMessage] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [actionInProgressId, setActionInProgressId] = useState(null);
+  const [actionInProgressId, setActionInProgressId] = useState<string | null>(
+    null
+  );
 
   const loadCategories = async () => {
     setIsLoading(true);
@@ -23,7 +26,7 @@ const CategoryManage = () => {
       } else {
         setCategories([]);
       }
-    } catch (err) {
+    } catch (err: any) {
       console.error("Fetch error:", err);
       setError(err.response?.data?.message || "Failed to fetch categories.");
       setCategories([]);
@@ -36,19 +39,19 @@ const CategoryManage = () => {
     loadCategories();
   }, []);
 
-  const handleStatusUpdate = (message) => {
+  const handleStatusUpdate = (message: string) => {
     setStatusMessage(message);
     loadCategories();
     const timer = setTimeout(() => setStatusMessage(""), 5000);
     return () => clearTimeout(timer);
   };
-  const handleDeleteCategory = async (id) => {
+  const handleDeleteCategory = async (id: string) => {
     if (
       window.confirm(
         "Are you sure you want to delete this category? This action is irreversible."
       )
     ) {
-      setActionInProgressId(id);
+      setActionInProgressId(id as string);
       setError(null);
 
       try {
@@ -56,7 +59,7 @@ const CategoryManage = () => {
         handleStatusUpdate(
           response.data.message || "Category deleted successfully!"
         );
-      } catch (err) {
+      } catch (err: any) {
         setError(err.response?.data?.message || "Failed to delete category.");
       } finally {
         setActionInProgressId(null);
@@ -131,7 +134,7 @@ const CategoryManage = () => {
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
-              {categories.map((cat) => (
+              {categories.map((cat: ICategory) => (
                 <tr key={cat._id} className="hover:bg-gray-50">
                   <td className="px-4 py-3 whitespace-nowrap text-xs font-mono text-gray-500">
                     {cat._id.substring(0, 8)}...
@@ -166,7 +169,6 @@ const CategoryManage = () => {
                         </>
                       )}
                     </button>
-                    {/* You can add an Edit button here later if you implement the update route */}
                   </td>
                 </tr>
               ))}
@@ -175,7 +177,6 @@ const CategoryManage = () => {
         </div>
       )}
 
-      {/* Modal */}
       <AddCategoryModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}

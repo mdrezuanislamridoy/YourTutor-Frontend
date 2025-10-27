@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { FaSearch, FaPlus } from "react-icons/fa";
 import AddCourseModal from "../components/AddCourseModal";
 import { CourseCard } from "../../../../components/CourseCard";
 import axiosInstance from "../../../../lib/axiosInstance";
 import Pagination from "../../../../components/Pagination";
+import type { ICourse } from "../../../../types/course.type";
 
 export default function Courses() {
   const [courses, setCourses] = useState([]);
@@ -43,12 +44,12 @@ export default function Courses() {
     loadCourses(1);
   }, []);
 
-  const handleSearchSubmit = (e) => {
+  const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     loadCourses(1, searchTerm);
   };
 
-  const handleSearchChange = (e) => {
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
   };
 
@@ -115,7 +116,7 @@ export default function Courses() {
         ) : (
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {courses.length > 0 ? (
-              courses.map((course) => (
+              courses.map((course: ICourse) => (
                 <CourseCard key={course._id} course={course} />
               ))
             ) : (

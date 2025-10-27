@@ -1,10 +1,17 @@
-import React from "react";
-
 export default function SidebarItem({
   section,
   selectedSection,
   setSelectedSection,
   isCollapsed,
+}: {
+  section: {
+    title: string;
+    selection: string;
+    icon: any;
+  };
+  selectedSection: string;
+  setSelectedSection: React.Dispatch<React.SetStateAction<string>>;
+  isCollapsed: boolean;
 }) {
   const isActive = selectedSection === section.selection;
   return (

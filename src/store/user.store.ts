@@ -202,7 +202,7 @@ export const UserStore = create<uStore>((set) => {
         });
         set({ message: res.data.message, user: res.data.user });
         return { success: res.data.success };
-      } catch (error) {
+      } catch (error :any) {
         set({
           message: error?.response.data.message || "Something went wrong",
         });
@@ -216,7 +216,7 @@ export const UserStore = create<uStore>((set) => {
         });
         set({ message: res.data.message });
         return { success: res.data.success };
-      } catch (error) {
+      } catch (error:any) {
         set({
           message: error?.response.data.message || "Something went wrong",
         });
@@ -232,7 +232,7 @@ export const UserStore = create<uStore>((set) => {
         });
         set({ message: res.data.message });
         return { success: res.data.success };
-      } catch (error) {
+      } catch (error:any) {
         set({
           message: error?.response.data.message || "Something went wrong",
         });
@@ -244,7 +244,7 @@ export const UserStore = create<uStore>((set) => {
       try {
         const res = await axiosInstance.post("/auth/logout");
         set({ message: res.data.message, user: null });
-      } catch (error) {
+      } catch (error:any) {
         set({
           message: error?.response.data.message || "Something went wrong",
         });

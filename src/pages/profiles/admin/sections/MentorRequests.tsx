@@ -1,11 +1,6 @@
 // MentorRequests.tsx
 import React, { useEffect, useState } from "react";
-import {
-  FaCheckCircle,
-  FaTimesCircle,
-  FaClock,
-  FaUserGraduate,
-} from "react-icons/fa";
+import { FaCheckCircle, FaClock, FaUserGraduate } from "react-icons/fa";
 import { IoIosWarning } from "react-icons/io";
 import { adminStore } from "../../../../store/admin.store";
 
@@ -16,7 +11,7 @@ interface MentorRequest {
 }
 
 const MentorRequests: React.FC = () => {
-  const { getRequestedMentors, approveMentor, rejectMentor, message } =
+  const { getRequestedMentors, approveMentor, rejectMentor, message }: any =
     adminStore();
 
   const [requests, setRequests] = useState<MentorRequest[]>([]);

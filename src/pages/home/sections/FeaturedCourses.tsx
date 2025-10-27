@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { CourseCard } from "../../../components/CourseCard";
 import axiosInstance from "../../../lib/axiosInstance";
 import { Link } from "react-router-dom";

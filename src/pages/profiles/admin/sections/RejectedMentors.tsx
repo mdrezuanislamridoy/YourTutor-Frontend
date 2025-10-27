@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { adminStore } from "../../../../store/admin.store";
+import type { Mentor } from "../../../../types/user.type";
 
 export default function RejectedMentors() {
   const [mentors, setMentors] = useState([]);
-  const [error, setError] = useState("");
-  const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(true);
 
-  const { rejectedMentors } = adminStore();
+  const { rejectedMentors }: any = adminStore();
 
   const loadMentors = async () => {
     try {
@@ -31,7 +30,7 @@ export default function RejectedMentors() {
   return (
     <div>
       {mentors.length > 0 ? (
-        mentors.map((mentor) => (
+        mentors.map((mentor: Mentor) => (
           <div key={mentor._id}>
             <p>{mentor.name}</p>
             <p>{mentor.email}</p>
