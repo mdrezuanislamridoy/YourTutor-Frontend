@@ -1,6 +1,6 @@
 import { FaShoppingCart, FaStar, FaTags } from "react-icons/fa";
 
-export const ProductCard = ({ product, getTypeColor }) => (
+export const ProductCard = ({ product, getTypeColor }: any) => (
   <div className="bg-white rounded-xl shadow-lg overflow-hidden transition duration-300 hover:shadow-xl border border-gray-100">
     <div className="h-40 bg-gray-50 flex items-center justify-center overflow-hidden">
       <img

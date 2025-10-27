@@ -98,7 +98,6 @@ const BlockedAccounts = () => {
         </button>
       </div>
 
-      {/* Status / Error Message */}
       {(error || message) && (
         <div
           className={`p-4 mb-6 rounded-lg transition-all duration-300 ${

@@ -2,6 +2,11 @@ import React, { useEffect, useState } from "react";
 import { RiCloseCircleLine } from "react-icons/ri";
 import axiosInstance from "../../../../lib/axiosInstance";
 
+interface ICategory {
+  _id: string;
+  name: string;
+}
+
 interface AddCourseModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -14,7 +19,7 @@ export default function AddCourseModal({
   onCourseAdded,
 }: AddCourseModalProps) {
   const [step, setStep] = useState(1);
-  const [categories, setCategories] = useState<any[]>([]);
+  const [categories, setCategories] = useState<ICategory[]>([]);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
 
@@ -32,7 +37,6 @@ export default function AddCourseModal({
   });
 
   const [thumbnail, setThumbnail] = useState<File | null>(null);
-
   const [includedInThisCourse, setIncludedInThisCourse] = useState<string[]>(
     []
   );
@@ -44,7 +48,8 @@ export default function AddCourseModal({
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
     >
   ) => {
-    const { name, value, type, checked } = e.target;
+    const { name, value, type } = e.target;
+    const checked = (e.target as HTMLInputElement).checked; // Narrow type for checkbox
     setFormData((prev) => ({
       ...prev,
       [name]: type === "checkbox" ? checked : value,
@@ -73,12 +78,15 @@ export default function AddCourseModal({
 
   const fetchCategories = async () => {
     try {
-      const res = await axiosInstance.get("/category");
+      const res = await axiosInstance.get<{ categories: ICategory[] }>(
+        "/category"
+      );
       setCategories(res.data.categories);
     } catch (error) {
       console.error("Failed to fetch categories", error);
     }
   };
+
   useEffect(() => {
     fetchCategories();
   }, []);
@@ -97,9 +105,10 @@ export default function AddCourseModal({
     try {
       const submissionData = new FormData();
 
-      for (const key in formData) {
-        submissionData.append(key, String((formData as any)[key]));
-      }
+      (Object.keys(formData) as (keyof typeof formData)[]).forEach((key) => {
+        const value = formData[key];
+        submissionData.append(key, String(value));
+      });
 
       if (thumbnail) submissionData.append("thumbnail", thumbnail);
 
@@ -111,7 +120,7 @@ export default function AddCourseModal({
       submissionData.append("forWhom", forWM);
       submissionData.append("whatYouWillLearn", whatWL);
 
-      const res = await axiosInstance.post(
+      const res = await axiosInstance.post<{ success: boolean }>(
         "/course/create-course",
         submissionData,
         {
@@ -119,22 +128,25 @@ export default function AddCourseModal({
         }
       );
 
-      if (res.data) {
+      if (res.data.success) {
         onCourseAdded();
         onClose();
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error adding course:", error);
-      setMessage(error.response?.data?.message || "Failed to add course.");
+      const errorMessage =
+        error.response?.data?.message || "Failed to add course.";
+      setMessage(errorMessage);
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    setTimeout(() => {
-      setMessage("");
-    }, 3000);
+    if (message) {
+      const timer = setTimeout(() => setMessage(""), 3000);
+      return () => clearTimeout(timer);
+    }
   }, [message]);
 
   if (!isOpen) return null;
@@ -291,7 +303,7 @@ export default function AddCourseModal({
               <option value="" disabled>
                 Select Category
               </option>
-              {Array.isArray(categories) && categories.length > 0 ? (
+              {categories.length > 0 ? (
                 categories.map((cat) => (
                   <option key={cat._id} value={cat._id}>
                     {cat.name}

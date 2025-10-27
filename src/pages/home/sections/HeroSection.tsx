@@ -1,8 +1,6 @@
-import React from "react";
-
 import FemalePillImage from "/hero-girl-image.png";
 
-const Card = ({ children, className = "" }) => (
+const Card = ({ children, className = "" }: any) => (
   <div className={`p-4 rounded-xl bg-white shadow-xl ${className}`}>
     {children}
   </div>

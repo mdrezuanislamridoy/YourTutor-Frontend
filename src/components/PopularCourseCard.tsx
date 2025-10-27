@@ -1,4 +1,4 @@
-const PopularCourseCard = ({ course }) => {
+const PopularCourseCard = ({ course }: any) => {
   const title = course.title;
   const students = course.enrolledStudents.toLocaleString();
   const rating = course.ratings.toFixed(1);

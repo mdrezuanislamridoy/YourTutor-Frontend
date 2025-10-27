@@ -56,13 +56,13 @@ const register = async (
     verificationCode: number;
   },
   api: string,
-  set
+  set: any
 ) => {
   try {
     const res = await axiosInstance.post(api, formData);
     set({ message: res.data.message });
     return { success: res.data.success };
-  } catch (error) {
+  } catch (error: any) {
     set({
       message: error?.response.data.message || "Something went wrong",
     });
@@ -86,7 +86,7 @@ export const UserStore = create<uStore>((set) => {
         set({ message: res.data.message });
 
         return { success: true };
-      } catch (error) {
+      } catch (error: any) {
         set({
           message: error?.response.data.message || "Something went wrong",
         });
@@ -106,7 +106,7 @@ export const UserStore = create<uStore>((set) => {
         }
         set({ message: res.data.message });
         return { success: res.data.success };
-      } catch (error) {
+      } catch (error: any) {
         set({
           message: error?.response.data.message || "Something went wrong",
         });
@@ -153,7 +153,7 @@ export const UserStore = create<uStore>((set) => {
         }
 
         return { success: res.data.success };
-      } catch (error) {
+      } catch (error: any) {
         set({
           message: error?.response.data.message || "Something went wrong",
         });
@@ -164,7 +164,7 @@ export const UserStore = create<uStore>((set) => {
       try {
         const res = await axiosInstance.get("/auth/profile");
         set({ message: res.data.message, user: res.data.user });
-      } catch (error) {
+      } catch (error: any) {
         set({
           message: error?.response.data.message || "Something went wrong",
         });
@@ -175,7 +175,7 @@ export const UserStore = create<uStore>((set) => {
         const res = await axiosInstance.put("/auth/updateProfile", formData);
         set({ message: res.data.message, user: res.data.updatedUser });
         return { success: res.data.success };
-      } catch (error) {
+      } catch (error: any) {
         set({
           message: error?.response.data.message || "Something went wrong",
         });
@@ -187,7 +187,7 @@ export const UserStore = create<uStore>((set) => {
         const res = await axiosInstance.put("/auth/deleteUser");
         set({ message: res.data.message, user: null });
         return { success: res.data.success };
-      } catch (error) {
+      } catch (error: any) {
         set({
           message: error?.response.data.message || "Something went wrong",
         });

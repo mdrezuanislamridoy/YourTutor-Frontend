@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { UserStore } from "../../store/user.store";
 import React from "react";
-import { useNavigate, useNavigation } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 
 export default function StudentSignup() {
   const sendSignUpCode = UserStore((state) => state.sendSignUpCode);
@@ -21,10 +21,9 @@ export default function StudentSignup() {
   const [isVerifyingCode, setIsVerifyingCode] = useState(false);
   const [isSentCode, setIsSentCode] = useState(false);
   const [isVerifiedCode, setIsVerifiedCode] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
   const [isRegistering, setIsRegistering] = useState(false);
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
@@ -78,7 +77,8 @@ export default function StudentSignup() {
     }
 
     try {
-      await registerStudent(formData);
+      await registerStudent(formData as any);
+      navigate("/");
     } catch (error) {
       console.error("Registration Error:", error);
       alert("An unexpected error occurred during registration.");

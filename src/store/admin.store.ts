@@ -1,13 +1,13 @@
 import { create } from "zustand";
 import axiosInstance from "../lib/axiosInstance";
 
-const doWork = async (api, set) => {
+const doWork = async (api: string, set: any) => {
   try {
     const response = await axiosInstance.put(api);
     const message = response.data.message;
     set({ message });
     return { success: response.data.success, message };
-  } catch (error) {
+  } catch (error: any) {
     const message =
       error?.response?.data?.message || error.message || "Something went wrong";
     set({ message });
@@ -23,7 +23,7 @@ export const adminStore = create((set) => {
       try {
         const result = await axiosInstance.get("/admin/requestedMentors");
         return result;
-      } catch (error) {
+      } catch (error: any) {
         console.log(error);
       }
     },
@@ -32,45 +32,47 @@ export const adminStore = create((set) => {
       try {
         const result = await axiosInstance.get("/admin/mentors");
         return result;
-      } catch (error) {
+      } catch (error: any) {
         console.log(error);
       }
     },
 
-    approveMentor: async (id) =>
+    approveMentor: async (id: string) =>
       await doWork(`/admin/approveMentor/${id}`, set),
 
-    rejectMentor: async (id) => await doWork(`/admin/rejectMentor/${id}`, set),
+    rejectMentor: async (id: string) =>
+      await doWork(`/admin/rejectMentor/${id}`, set),
 
     rejectedMentors: async () => {
       try {
         const result = await axiosInstance.get("/admin/rejectedMentors");
         return result;
-      } catch (error) {
+      } catch (error: any) {
         console.log(error);
       }
     },
-    block: async (id) => await doWork(`/admin/block/${id}`, set),
+    block: async (id: string) => await doWork(`/admin/block/${id}`, set),
 
-    unblock: async (id) => await doWork(`/admin/unblock/${id}`, set),
+    unblock: async (id: string) => await doWork(`/admin/unblock/${id}`, set),
 
     getBlockedAcc: async () => {
       try {
         const result = await axiosInstance.get("/admin/blockedAccount");
         return result;
-      } catch (error) {
+      } catch (error: any) {
         console.log(error);
       }
     },
 
-    deleteUser: async (id) => await doWork(`/admin/delete/${id}`, set),
+    deleteUser: async (id: string) => await doWork(`/admin/delete/${id}`, set),
 
-    undoDelete: async (id) => await doWork(`/admin/undoDelete/${id}`, set),
+    undoDelete: async (id: string) =>
+      await doWork(`/admin/undoDelete/${id}`, set),
     getDeletedAcc: async () => {
       try {
         const result = await axiosInstance.get("/admin/getDeletedAccount");
         return result;
-      } catch (error) {
+      } catch (error: any) {
         console.log(error);
       }
     },

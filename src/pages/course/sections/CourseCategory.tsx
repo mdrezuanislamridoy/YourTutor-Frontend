@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axiosInstance from "../../../lib/axiosInstance";
 import { useNavigate } from "react-router-dom";
 
@@ -39,9 +39,9 @@ export default function CourseCategory() {
       ) : (
         <div className="grid grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
           {categories.length > 0 ? (
-            categories.map((category) => (
+            categories.map((category: any) => (
               <div
-                key={category.id}
+                key={category._id}
                 className="flex flex-col items-center bg-white p-6 rounded-xl shadow-lg 
                          hover:shadow-2xl hover:scale-[1.03] transition duration-300 
                          ease-in-out cursor-pointer border border-gray-100"

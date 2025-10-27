@@ -1,10 +1,9 @@
-import React from "react";
 import { useNavigate } from "react-router-dom";
 import { FaEdit, FaTrashAlt, FaStar, FaUserGraduate } from "react-icons/fa";
 import { UserStore } from "../store/user.store";
 import axiosInstance from "../lib/axiosInstance";
 
-export const CourseCard = ({ course }) => {
+export const CourseCard = ({ course }: any) => {
   const { user } = UserStore();
   const navigate = useNavigate();
   const role = user?.role;
@@ -45,8 +44,15 @@ export const CourseCard = ({ course }) => {
     }
   };
 
+  const handleNavigate = () => {
+    navigate(`/course/${course._id}`);
+  };
+
   return (
-    <div className="bg-white border border-gray-200 rounded-xl shadow-md overflow-hidden transition duration-300 hover:shadow-lg flex flex-col">
+    <div
+      onClick={handleNavigate}
+      className="bg-white border border-gray-200 rounded-xl shadow-md overflow-hidden transition duration-300 hover:shadow-lg flex flex-col"
+    >
       <div className="h-40 bg-gray-100 overflow-hidden">
         <img
           src={course.thumbnail.imageUrl}

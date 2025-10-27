@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axiosInstance from "../../../lib/axiosInstance";
 import { CourseCard } from "../../../components/CourseCard";
 import { Link } from "react-router-dom";
@@ -54,7 +54,7 @@ export default function RecommendedCourses() {
         <div>
           {courses.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {courses.map((course) => (
+              {courses.map((course: any) => (
                 <CourseCard key={course._id} course={course} />
               ))}
             </div>

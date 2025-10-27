@@ -1,17 +1,43 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-
 import { FaStar } from "react-icons/fa";
 import { UserStore } from "../../store/user.store";
 import axiosInstance from "../../lib/axiosInstance";
+import { AxiosError } from "axios";
+
+interface Course {
+  _id: string;
+  title: string;
+  thumbnail: { imageUrl: string };
+  ratings: number;
+  duration: string;
+  live: boolean;
+  description: string;
+  price: number;
+}
+
+interface EnrollmentResponse {
+  message: string;
+  enrollment: { _id: string };
+}
+
+interface PaymentResponse {
+  url: string;
+  message?: string;
+}
+
+interface User {
+  _id: string;
+  role: "student" | "mentor" | "admin";
+  email: string;
+}
 
 const EnrollmentPage = () => {
   const { id } = useParams<{ id: string }>();
-
-  const { user } = UserStore();
+  const { user } = UserStore() as { user: User | null };
   const navigate = useNavigate();
 
-  const [course, setCourse] = useState<any>(null);
+  const [course, setCourse] = useState<Course | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [enrolling, setEnrolling] = useState(false);
@@ -21,64 +47,92 @@ const EnrollmentPage = () => {
 
   useEffect(() => {
     if (!user) {
-      navigate("/login");
+      navigate("/login", { replace: true });
       return;
     }
 
     const fetchCourse = async () => {
       setLoading(true);
       try {
-        const res = await axiosInstance.get(`/course/${id}`);
+        const res = await axiosInstance.get<{ course: Course }>(
+          `/course/${id}`
+        );
         setCourse(res.data.course);
         setTotalAmount(res.data.course.price);
-      } catch (err: any) {
-        setError(err.response?.data?.message || "Failed to fetch course");
+      } catch (err) {
+        const axiosError = err as AxiosError<{ message?: string }>;
+        setError(
+          axiosError.response?.data?.message || "Failed to fetch course"
+        );
       } finally {
         setLoading(false);
       }
     };
 
     fetchCourse();
-  }, [id, user]);
+  }, [id, user, navigate]);
 
- 
-const handleEnroll = async () => {
-  if (!user) {
-    navigate("/login");
-    return;
-  }
-
-  setEnrolling(true);
-  try {
-    const enrollRes = await axiosInstance.post(`/enrollment/enroll/${id}`, {
-      couponCode: couponCode ? { code: couponCode } : undefined,
-    });
-
-    alert(enrollRes.data.message || "Enrollment successful!");
-
-    if (enrollRes.data.enrollment && enrollRes.data.enrollment._id) {
-      
-      const payRes = await axiosInstance.get(
-        `/payment/payBill/${enrollRes.data.enrollment._id}`
-      ); 
-
-      if (payRes.data.url) {
-     
-        window.location.href = payRes.data.url;
-      } else {
-        alert(
-          "Payment init failed: " + (payRes.data.message || "No payment URL")
-        );
-      }
+  const applyCoupon = async () => {
+    if (!couponCode) {
+      setError("Please enter a coupon code");
+      return;
     }
-  } catch (err: any) {
-    console.error("Error:", err); 
-    alert(err.response?.data?.message || "Enrollment failed!");
-  } finally {
-    setEnrolling(false);
-  }
-};
 
+    try {
+      const res = await axiosInstance.post<{
+        discount: number;
+        message: string;
+      }>(`/coupon/validate`, { code: couponCode, courseId: id });
+      const { discount } = res.data;
+      setDiscount(discount);
+      setTotalAmount(course!.price - discount);
+      setError(null);
+      alert(res.data.message || "Coupon applied successfully!");
+    } catch (err) {
+      const axiosError = err as AxiosError<{ message?: string }>;
+      setError(axiosError.response?.data?.message || "Invalid coupon code");
+    }
+  };
+
+  const handleEnroll = async () => {
+    if (!user) {
+      navigate("/login", { replace: true });
+      return;
+    }
+
+    setEnrolling(true);
+    try {
+      const enrollRes = await axiosInstance.post<EnrollmentResponse>(
+        `/enrollment/enroll/${id}`,
+        {
+          couponCode: couponCode ? { code: couponCode } : undefined,
+        }
+      );
+
+      alert(enrollRes.data.message || "Enrollment successful!");
+
+      if (enrollRes.data.enrollment && enrollRes.data.enrollment._id) {
+        const payRes = await axiosInstance.get<PaymentResponse>(
+          `/payment/payBill/${enrollRes.data.enrollment._id}`
+        );
+
+        if (payRes.data.url) {
+          window.location.href = payRes.data.url;
+        } else {
+          alert(
+            "Payment initiation failed: " +
+              (payRes.data.message || "No payment URL")
+          );
+        }
+      }
+    } catch (err) {
+      const axiosError = err as AxiosError<{ message?: string }>;
+      console.error("Enrollment error:", axiosError);
+      alert(axiosError.response?.data?.message || "Enrollment failed!");
+    } finally {
+      setEnrolling(false);
+    }
+  };
 
   if (loading) return <p className="text-center mt-12">Loading course...</p>;
   if (error) return <p className="text-center mt-12 text-red-500">{error}</p>;
@@ -125,7 +179,7 @@ const handleEnroll = async () => {
               className="border border-gray-300 rounded-md px-3 py-2 mb-2 sm:mb-0 sm:mr-2 flex-grow"
             />
             <button
-              // onClick={applyCoupon}
+              onClick={applyCoupon}
               className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
             >
               Apply Coupon

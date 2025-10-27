@@ -2,17 +2,17 @@ import { FaPlus, FaTimes, FaUpload } from "react-icons/fa";
 import axiosInstance from "../../../../lib/axiosInstance";
 import { useState } from "react";
 
-const AddCategoryModal = ({ isOpen, onClose, onCategoryAdded }) => {
+const AddCategoryModal = ({ isOpen , onClose, onCategoryAdded }:any) => {
   const [name, setName] = useState("");
-  const [iconFile, setIconFile] = useState(null);
+  const [iconFile, setIconFile] = useState<File | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [modalError, setModalError] = useState(null);
+  const [modalError, setModalError] = useState("");
 
   if (!isOpen) return null;
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setModalError(null);
+    setModalError("");
     if (!name.trim()) {
       setModalError("Category name is required.");
       return;
@@ -40,7 +40,7 @@ const AddCategoryModal = ({ isOpen, onClose, onCategoryAdded }) => {
       setName("");
       setIconFile(null);
       onClose();
-    } catch (error) {
+    } catch (error: any) {
       console.error("Add Category Error:", error);
       setModalError(error.response?.data?.message || "Failed to add category.");
     } finally {
@@ -90,7 +90,9 @@ const AddCategoryModal = ({ isOpen, onClose, onCategoryAdded }) => {
               type="file"
               name="icon"
               accept="image/*"
-              onChange={(e) => setIconFile(e.target.files[0])}
+              onChange={(e: React.ChangeEvent<HTMLInputElement> | any) =>
+                setIconFile(e.target.files[0])
+              }
               className="hidden"
               required
             />

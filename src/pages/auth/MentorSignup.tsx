@@ -77,7 +77,7 @@ export default function MentorSignup() {
     }
 
     try {
-      await registerMentor(formData);
+      await registerMentor(formData as any);
       // You might add navigation/redirection logic here
     } catch (error) {
       console.error("Registration Error:", error);

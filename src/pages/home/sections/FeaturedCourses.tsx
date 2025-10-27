@@ -2,25 +2,48 @@ import React, { useEffect, useState } from "react";
 import { CourseCard } from "../../../components/CourseCard";
 import axiosInstance from "../../../lib/axiosInstance";
 import { Link } from "react-router-dom";
+import { AxiosError } from "axios";
 
-export default function FeaturedCourses() {
-  const [featuredList, setFeaturedList] = useState([]);
+
+interface Course {
+  _id: string;
+  title: string;
+  thumbnail: { imageUrl: string };
+  ratings: number;
+  duration: string;
+  live: boolean;
+  description: string;
+  price: number;
+}
+
+const FeaturedCourses = () => {
+  const [featuredList, setFeaturedList] = useState<Course[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   const fetchFeaturedCourse = async () => {
     try {
-      const res = await axiosInstance.get("/course/get-featured-courses", {
-        params: {
-          limit: 4,
-        },
-      });
-      setFeaturedList(res?.data?.courses || []);
-    } catch (error) {
-      console.error("Error fetching recommended courses:", error);
+      const res = await axiosInstance.get<{ courses: Course[] }>(
+        "/course/get-featured-courses",
+        {
+          params: {
+            limit: 4,
+          },
+        }
+      );
+      setFeaturedList(res.data.courses || []);
+      setError(null);
+    } catch (err) {
+      const axiosError = err as AxiosError<{ message?: string }>;
+      setError(
+        axiosError.response?.data?.message || "Failed to fetch featured courses"
+      );
+      console.error("Error fetching recommended courses:", axiosError);
     } finally {
       setLoading(false);
     }
   };
+
   useEffect(() => {
     fetchFeaturedCourse();
   }, []);
@@ -40,13 +63,17 @@ export default function FeaturedCourses() {
 
         {loading ? (
           <div className="text-center text-2xl font-semibold">Loading...</div>
+        ) : error ? (
+          <div className="text-center text-2xl font-semibold text-red-500">
+            {error}
+          </div>
         ) : (
           <>
             {featuredList.length === 0 && (
               <div className="text-center mt-12">
                 <h1 className="text-7xl md:text-8xl font-extrabold text-gray-900 mb-4">
                   4
-                  <span className=" text-8xl md:text-9xl -rotate-12 inline-block">
+                  <span className="text-8xl md:text-9xl -rotate-12 inline-block">
                     0
                   </span>
                   4
@@ -66,7 +93,7 @@ export default function FeaturedCourses() {
 
         <div className="flex justify-center mt-8">
           <Link
-            to={"/courses"}
+            to="/courses"
             className="py-3 px-8 text-lg font-semibold bg-teal-500 text-white rounded-full hover:bg-teal-600 transition duration-300 shadow-lg"
           >
             View All Courses
@@ -75,4 +102,6 @@ export default function FeaturedCourses() {
       </div>
     </section>
   );
-}
+};
+
+export default FeaturedCourses;

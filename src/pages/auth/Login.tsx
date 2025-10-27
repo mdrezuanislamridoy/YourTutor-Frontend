@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import { UserStore } from "../../store/user.store";
 
 export default function Login() {

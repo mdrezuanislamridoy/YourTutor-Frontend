@@ -1,7 +1,18 @@
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import PopularCourseCard from "../../../components/PopularCourseCard";
 import axiosInstance from "../../../lib/axiosInstance";
+
+interface Course {
+  _id: string;
+  title: string;
+  thumbnail: { imageUrl: string };
+  ratings: number;
+  duration: string;
+  live: boolean;
+  description: string;
+  price: number;
+}
 
 export default function PopularCourses() {
   const [popularList, setPopularList] = useState([]);
@@ -60,7 +71,7 @@ export default function PopularCourses() {
             )}
 
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-              {popularList.map((course) => (
+              {popularList.map((course: Course) => (
                 <PopularCourseCard key={course._id} course={course} />
               ))}
             </div>

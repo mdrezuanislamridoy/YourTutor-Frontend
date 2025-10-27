@@ -1,6 +1,5 @@
-import React from "react";
 
-const StatItem = ({ value, label, valueColorClass = "text-teal-500" }) => (
+const StatItem = ({ value, label, valueColorClass = "text-teal-500" }: any) => (
   <div className="flex flex-col items-center text-center">
     <div className={`text-5xl font-bold mb-2 ${valueColorClass}`}>{value}</div>
     <div className="text-lg text-gray-700 font-medium">{label}</div>
