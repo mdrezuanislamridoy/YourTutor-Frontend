@@ -41,10 +41,6 @@ export default function Login() {
       <h4 className="text-xl font-semibold text-gray-800 mb-6">
         Welcome to YourTutor
       </h4>
-      <p className="text-sm text-gray-500 mb-6">
-        Lorem Ipsum is simply dummy text of the printing and typesetting
-        industry.
-      </p>
 
       <form onSubmit={handleSubmit} className="space-y-4">
         {/* Email/Username Field */}
