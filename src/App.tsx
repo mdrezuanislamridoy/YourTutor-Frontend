@@ -9,6 +9,10 @@ import CoursesPage from "./pages/courses/CoursesPage";
 import Course from "./pages/course/Course";
 import Enrollment from "./pages/enrollment/Enrollment";
 import CourseDetails from "./pages/courseDetails/CourseDetails";
+import Success from "./pages/enrollment/pages/Success";
+import Failed from "./pages/enrollment/pages/Failed";
+import Cancelled from "./pages/enrollment/pages/Cancelled";
+import Footer from "./components/layout/Footer";
 
 export default function App() {
   const { profile, user } = UserStore();
@@ -31,7 +35,20 @@ export default function App() {
         <Route path="/courses" element={<CoursesPage />} />
         <Route path="/enrollment/:id" element={<Enrollment />} />
         <Route path="/course/:id" element={<CourseDetails />} />
+        <Route
+          path="/payment/success/:id"
+          element={user ? <Success /> : <Navigate to={"/auth"} />}
+        />
+        <Route
+          path="/payment/fail/:id"
+          element={user ? <Failed /> : <Navigate to="/auth" />}
+        />
+        <Route
+          path="/payment/cancelled/:id"
+          element={user ? <Cancelled /> : <Navigate to={"/auth"} />}
+        />
       </Routes>
+      <Footer />
     </>
   );
 }
