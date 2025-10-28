@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import Admin from "./admin/Admin";
 import { UserStore } from "../../store/user.store";
 import Student from "./student/Student";
 import { Loader2 } from "lucide-react";
