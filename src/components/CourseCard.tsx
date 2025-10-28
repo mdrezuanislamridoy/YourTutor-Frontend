@@ -2,8 +2,10 @@ import { useNavigate } from "react-router-dom";
 import { FaEdit, FaTrashAlt, FaStar, FaUserGraduate } from "react-icons/fa";
 import { UserStore } from "../store/user.store";
 import axiosInstance from "../lib/axiosInstance";
+import { useState } from "react";
 
 export const CourseCard = ({ course }: any) => {
+  const [showLink, setShowLink] = useState(false);
   const { user } = UserStore();
   const navigate = useNavigate();
   const role = user?.role;
@@ -50,15 +52,31 @@ export const CourseCard = ({ course }: any) => {
 
   return (
     <div
-      onClick={handleNavigate}
-      className="bg-white border border-gray-200 rounded-xl shadow-md overflow-hidden transition duration-300 hover:shadow-lg flex flex-col"
+      className={`bg-white border border-gray-200 rounded-xl shadow-md overflow-hidden transition duration-300 hover:shadow-lg flex flex-col `}
     >
-      <div className="h-40 bg-gray-100 overflow-hidden">
+      <div
+        className="h-40 bg-gray-100 overflow-hidden relative"
+        onMouseEnter={() => setShowLink(true)}
+        onMouseLeave={() => setShowLink(false)}
+      >
         <img
           src={course.thumbnail.imageUrl}
           alt={course.title}
           className="w-full h-full object-cover"
         />
+
+        <div
+          className={`absolute bottom-3 right-3 ${
+            showLink ? "opacity-100" : "opacity-0"
+          } transition duration-300`}
+        >
+          <button
+            onClick={handleNavigate}
+            className="p-3 bg-white text-teal-500 rounded-full hover:bg-gray-100 transition duration-300"
+          >
+            <FaEdit className="w-5 h-5" />
+          </button>
+        </div>
       </div>
 
       <div className="p-4 flex flex-col flex-grow">
@@ -95,7 +113,7 @@ export const CourseCard = ({ course }: any) => {
           <span className="text-xl font-extrabold text-teal-600">
             {priceText}
           </span>
-          <div className="flex space-x-2">
+          <div className="flex space-x-2 z-40">
             {role === "admin" && (
               <>
                 <button

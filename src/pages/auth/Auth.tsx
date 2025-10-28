@@ -1,4 +1,4 @@
-import  { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Login from "./Login";
 import StudentSignup from "./StudentSignup";
 import MentorSignup from "./MentorSignup";
@@ -17,6 +17,9 @@ export default function Auth() {
     }, 3000);
   }, [message]);
 
+  useEffect(() => {
+    resetMessage();
+  }, []);
   const [page, setPage] = useState<"login" | "studentSignup" | "mentorSignup">(
     "login"
   );

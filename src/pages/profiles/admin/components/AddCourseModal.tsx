@@ -128,10 +128,10 @@ export default function AddCourseModal({
         }
       );
 
-      if (res.data.success) {
-        onCourseAdded();
-        onClose();
-      }
+
+      
+      onCourseAdded();
+      onClose();
     } catch (error: any) {
       console.error("Error adding course:", error);
       const errorMessage =
@@ -323,7 +323,7 @@ export default function AddCourseModal({
       <div className="bg-teal-600 p-6 rounded-2xl w-[500px] relative">
         <button
           onClick={onClose}
-          className="absolute top-3 right-3 text-2xl text-gray-400 hover:text-teal-200"
+          className="absolute top-3 right-3 text-2xl text-gray-200 hover:text-teal-200"
         >
           <RiCloseCircleLine />
         </button>

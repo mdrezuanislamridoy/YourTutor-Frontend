@@ -1,11 +1,25 @@
-import  { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Admin from "./admin/Admin";
 import { UserStore } from "../../store/user.store";
 import Student from "./student/Student";
+import { Loader2 } from "lucide-react";
 
 export default function Profile() {
   const { profile, user } = UserStore();
   const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    try {
+      const fetchProfile = async () => {
+        await profile();
+      };
+      fetchProfile();
+    } catch (error: any) {
+      console.log("Failed to fetch profile ", error);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
 
   useEffect(() => {
     try {
@@ -25,17 +39,21 @@ export default function Profile() {
 
   const Page = () => {
     switch (user?.role) {
-      case "student":
+      case "admin":
         return <Student />;
       case "mentor":
         return <div>Mentor</div>;
       default:
-        return <Admin />;
+        return <Student />;
     }
   };
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex min-h-screen justify-center items-center">
+        <Loader2 className="w-8 h-8 text-teal-500 animate-spin" />
+      </div>
+    );
   }
 
   return (

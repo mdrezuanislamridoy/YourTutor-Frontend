@@ -24,7 +24,7 @@ export default function MentorSignup() {
   // --- Step 1: Send Code ---
   const handleSendCode = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.email) return alert("Please enter your email.");
+    if (!formData.email) return console.log("Please enter your email.");
 
     setIsSendingCode(true);
     try {
@@ -32,11 +32,11 @@ export default function MentorSignup() {
       if (result.success) {
         setIsSentCode(true);
       } else {
-        alert("Failed to send code. Please try again.");
+        console.log("Failed to send code. Please try again.");
       }
     } catch (error) {
       console.error("Send Code Error:", error);
-      alert("An unexpected error occurred while sending the code.");
+      console.log("An unexpected error occurred while sending the code.");
     } finally {
       setIsSendingCode(false);
     }
@@ -46,7 +46,7 @@ export default function MentorSignup() {
   const handleVerifyCode = async (e: React.FormEvent) => {
     e.preventDefault();
     if (String(formData.verificationCode).length !== 6)
-      return alert("Please enter the 6-digit verification code.");
+      return console.log("Please enter the 6-digit verification code.");
 
     setIsVerifyingCode(true);
     try {
@@ -54,34 +54,31 @@ export default function MentorSignup() {
       const result = await verifySignUpCode(formData.email, code);
       if (result.success) {
         setIsVerifiedCode(true);
-        alert("Code Verified! Now set your name and password.");
+        console.log("Code Verified! Now set your name and password.");
       } else {
-        // Error message is typically handled by the store or an external alert/toast library
+        // Error message is typically handled by the store or an external console.log/toast library
       }
     } catch (error) {
       console.error("Verify Code Error:", error);
-      alert("An unexpected error occurred during code verification.");
+      console.log("An unexpected error occurred during code verification.");
     } finally {
       setIsVerifyingCode(false);
     }
   };
 
-  // --- Step 3: Final Registration ---
   const handleRegistration = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!isVerifiedCode)
-      return alert("Please complete email verification first.");
+      return console.log("Please complete email verification first.");
     if (!formData.name || !formData.password || !formData.verificationCode) {
-      return alert("All fields are required for registration.");
+      return console.log("All fields are required for registration.");
     }
 
     try {
       await registerMentor(formData as any);
-      // You might add navigation/redirection logic here
     } catch (error) {
       console.error("Registration Error:", error);
-      alert("An unexpected error occurred during mentor registration.");
     }
   };
 

@@ -16,6 +16,10 @@ const CourseDetails = () => {
 
   const [course, setCourse] = useState<any>({});
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const fetchCourse = async () => {
     try {
       const getCourse = await axiosInstance.get(`/course/${id}`);
