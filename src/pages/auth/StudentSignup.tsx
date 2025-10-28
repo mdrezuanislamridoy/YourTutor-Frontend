@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { UserStore } from "../../store/user.store";
 import React from "react";
-import {  useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function StudentSignup() {
   const sendSignUpCode = UserStore((state) => state.sendSignUpCode);
@@ -29,19 +29,16 @@ export default function StudentSignup() {
   };
 
   const handleSendCode = async () => {
-    if (!formData.email) return alert("Please enter your email.");
+    if (!formData.email) return console.log("Please enter your email.");
 
     setIsSendingCode(true);
     try {
       const result = await sendSignUpCode(formData.email);
       if (result.success) {
         setIsSentCode(true);
-      } else {
-        alert("Failed to send code. Please try again.");
       }
     } catch (error) {
       console.error("Send Code Error:", error);
-      alert("An unexpected error occurred while sending the code.");
     } finally {
       setIsSendingCode(false);
     }
@@ -49,7 +46,7 @@ export default function StudentSignup() {
 
   const handleVerifyCode = async () => {
     if (String(formData.verificationCode).length !== 6)
-      return alert("Please enter the 6-digit verification code.");
+      return console.log("Please enter the 6-digit verification code.");
 
     setIsVerifyingCode(true);
     try {
@@ -57,11 +54,9 @@ export default function StudentSignup() {
       const result = await verifySignUpCode(formData.email, code);
       if (result.success) {
         setIsVerifiedCode(true);
-        alert("Code Verified! Now set your name and password.");
       }
     } catch (error) {
       console.error("Verify Code Error:", error);
-      alert("An unexpected error occurred during code verification.");
     } finally {
       setIsVerifyingCode(false);
     }

@@ -26,7 +26,6 @@ export default function Login() {
       await login({ email: formData.email, password: formData.password });
     } catch (error) {
       console.error("Login Error:", error);
-      alert("An unexpected error occurred during login.");
     } finally {
       setIsSubmitting(false);
     }
@@ -43,7 +42,6 @@ export default function Login() {
       </h4>
 
       <form onSubmit={handleSubmit} className="space-y-4">
-        {/* Email/Username Field */}
         <div className="space-y-1">
           <label htmlFor="email" className="text-sm font-medium text-gray-700">
             User name
@@ -60,7 +58,6 @@ export default function Login() {
           />
         </div>
 
-        {/* Password Field */}
         <div className="space-y-1">
           <label
             htmlFor="password"
@@ -84,7 +81,6 @@ export default function Login() {
               onClick={() => setShowPassword(!showPassword)}
               className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600"
             >
-              {/* Eye icon for password visibility */}
               <svg
                 className="h-5 w-5"
                 fill="none"
@@ -92,7 +88,6 @@ export default function Login() {
                 stroke="currentColor"
               >
                 {showPassword ? (
-                  // Open eye
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -100,7 +95,6 @@ export default function Login() {
                     d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
                   />
                 ) : (
-                  // Closed eye
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -113,7 +107,6 @@ export default function Login() {
           </div>
         </div>
 
-        {/* Remember Me and Forgot Password */}
         <div className="flex justify-between items-center text-sm pt-1">
           <label className="flex items-center space-x-2 text-gray-600">
             <input
@@ -133,7 +126,6 @@ export default function Login() {
           </a>
         </div>
 
-        {/* Login Button */}
         <button
           type="submit"
           disabled={isSubmitting}
