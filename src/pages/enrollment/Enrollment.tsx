@@ -34,7 +34,10 @@ interface User {
 
 const EnrollmentPage = () => {
   const { id } = useParams<{ id: string }>();
-  const { user } = UserStore() as { user: User | null };
+  const { user, profile } = UserStore() as {
+    user: User | null;
+    profile: () => Promise<void>;
+  };
   const navigate = useNavigate();
 
   const [course, setCourse] = useState<Course | null>(null);
@@ -44,6 +47,20 @@ const EnrollmentPage = () => {
   const [couponCode, setCouponCode] = useState("");
   const [discount, setDiscount] = useState(0);
   const [totalAmount, setTotalAmount] = useState<number>(0);
+
+  useEffect(() => {
+    try {
+      const fetchProfile = async () => {
+        profile();
+      };
+      fetchProfile();
+    } catch (error: any) {
+      setError(error);
+      navigate("/auth");
+    } finally {
+      setLoading(false);
+    }
+  }, []);
 
   useEffect(() => {
     if (!user) {
@@ -109,15 +126,15 @@ const EnrollmentPage = () => {
         }
       );
 
-      alert(enrollRes.data.message || "Enrollment successful!");
-
       if (enrollRes.data.enrollment && enrollRes.data.enrollment._id) {
-        const payRes = await axiosInstance.get<PaymentResponse>(
+        const payRes = await axiosInstance.post<PaymentResponse>(
           `/payment/payBill/${enrollRes.data.enrollment._id}`
         );
 
+        console.log(payRes.data);
+
         if (payRes.data.url) {
-          window.location.href = payRes.data.url;
+          window.location.replace(payRes.data.url);
         } else {
           alert(
             "Payment initiation failed: " +
@@ -134,7 +151,7 @@ const EnrollmentPage = () => {
     }
   };
 
-  if (loading) return <p className="text-center mt-12">Loading course...</p>;
+  if (loading) return <p className="text-center mt-12"></p>;
   if (error) return <p className="text-center mt-12 text-red-500">{error}</p>;
   if (!course) return null;
 

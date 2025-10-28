@@ -29,10 +29,7 @@ export default function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/course" element={<Course />} />
         <Route path="/courses" element={<CoursesPage />} />
-        <Route
-          path="/enrollment/:id"
-          element={user ? <Enrollment /> : <Navigate to={"/auth"} />}
-        />
+        <Route path="/enrollment/:id" element={<Enrollment />} />
         <Route path="/course/:id" element={<CourseDetails />} />
       </Routes>
     </>
