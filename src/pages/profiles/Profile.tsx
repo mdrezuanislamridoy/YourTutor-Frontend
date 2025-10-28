@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { UserStore } from "../../store/user.store";
 import Student from "./student/Student";
 import { Loader2 } from "lucide-react";
+import Admin from "./admin/Admin";
 
 export default function Profile() {
   const { profile, user } = UserStore();
@@ -39,7 +40,7 @@ export default function Profile() {
   const Page = () => {
     switch (user?.role) {
       case "admin":
-        return <Student />;
+        return <Admin />;
       case "mentor":
         return <div>Mentor</div>;
       default:
