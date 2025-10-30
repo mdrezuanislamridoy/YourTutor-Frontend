@@ -1,3 +1,5 @@
+import type { ICourse } from "./course.type";
+
 export interface IUser {
   _id: string;
   name: string;
@@ -40,22 +42,6 @@ export interface IProject {
   title: string;
   thumbnail: string;
   description: string;
-}
-
-export interface ICourse {
-  _id: string;
-  title: string;
-  description: string;
-  thumbnail: IThumbnail;
-  price: number;
-  ratings: number;
-  enrolledStudents: number;
-  duration?: string;
-  introVideo?: string;
-  instructors: IInstructor[];
-  modules: IModule[];
-  projectsFromThis: IProject[];
-  category?: ICategory;
 }
 
 export interface IProgress {

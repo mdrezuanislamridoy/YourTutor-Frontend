@@ -47,6 +47,10 @@ const StudentDashboard = () => {
     </div>
   );
 
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div className="p-4 md:p-8 bg-gray-50 min-h-screen">
       <header className="mb-8 p-6 bg-white rounded-xl shadow-lg border-t-4 border-teal-500">
