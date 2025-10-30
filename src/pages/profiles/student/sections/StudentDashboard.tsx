@@ -12,6 +12,7 @@ import axiosInstance from "../../../../lib/axiosInstance";
 import { UserStore } from "../../../../store/user.store";
 import { Link } from "react-router-dom";
 import EnrollmentCard from "../../../../components/EnrollmentCard";
+import { Loader2 } from "lucide-react";
 
 const StudentDashboard = () => {
   const { user } = UserStore();
@@ -47,9 +48,12 @@ const StudentDashboard = () => {
     </div>
   );
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+  if (loading)
+    return (
+      <div className="flex justify-center items-center py-20">
+        <Loader2 className="w-8 h-8 text-teal-500 animate-spin" />
+      </div>
+    );
 
   return (
     <div className="p-4 md:p-8 bg-gray-50 min-h-screen">

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axiosInstance from "../../../../lib/axiosInstance";
 import EnrollmentCard from "../../../../components/EnrollmentCard";
+import { Loader2 } from "lucide-react";
 
 export default function EnrollmentList() {
   const [enrollments, setEnrollments] = useState([]);
@@ -21,8 +22,12 @@ export default function EnrollmentList() {
     fetchEnrollments();
   }, []);
 
-  if (loading) return <div>Loading...</div>;
-
+ if (loading)
+   return (
+     <div className="flex justify-center items-center py-20">
+       <Loader2 className="w-8 h-8 text-teal-500 animate-spin" />
+     </div>
+   );
   return (
     <div className="p-4 md:p-8 bg-gray-50 min-h-screen">
       <h2 className="text-2xl font-bold text-gray-800 mb-6">My Enrollments</h2>
