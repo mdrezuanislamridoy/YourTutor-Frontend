@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axiosInstance from "../../../../lib/axiosInstance";
 import { Loader2, ChevronDown, ChevronUp, PlayCircle } from "lucide-react";
