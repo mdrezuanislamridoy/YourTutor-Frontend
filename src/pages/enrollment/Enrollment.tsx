@@ -131,7 +131,6 @@ const EnrollmentPage = () => {
           `/payment/payBill/${enrollRes.data.enrollment._id}`
         );
 
-        console.log(payRes.data);
 
         if (payRes.data.url) {
           window.location.replace(payRes.data.url);

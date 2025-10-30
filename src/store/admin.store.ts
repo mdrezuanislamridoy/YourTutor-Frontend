@@ -76,5 +76,19 @@ export const adminStore = create((set) => {
         console.log(error);
       }
     },
+    addMentorToCourse: async (mentorId: string, courseId: string) => {
+      try {
+        const res = await axiosInstance.put(
+          `/admin/addMentorToCourse/${mentorId}`,
+          {
+            id: courseId,
+          }
+        );
+        return res.data;
+      } catch (error: any) {
+        console.error("Error adding mentor to course:", error);
+        throw error;
+      }
+    },
   };
 });

@@ -27,6 +27,8 @@ import SidebarItem from "./components/SidebarItems";
 import Mentors from "./sections/Mentors";
 import Students from "./sections/Students";
 import Products from "./sections/Products";
+import { UserPlus } from "lucide-react";
+import AddMentorToCourse from "./sections/AddMentorToCourse";
 
 export default function Admin() {
   const [selectedSection, setSelectedSection] = React.useState("dashboard");
@@ -61,6 +63,7 @@ export default function Admin() {
       icon: GiTeacher,
     },
     { title: "Deleted Users", selection: "deleted-users", icon: FaUsersSlash },
+    { title: "Add Mentor To Course", selection: "add-mtc", icon: UserPlus },
 
     {
       title: "Notice Board Manager",
@@ -99,6 +102,8 @@ export default function Admin() {
         return <RejectedMentors />;
       case "deleted-users":
         return <DeletedUsers />;
+      case "add-mtc":
+        return <AddMentorToCourse />;
       case "notice-board-manager":
         return <NoticeBoard />;
       case "category-manager":

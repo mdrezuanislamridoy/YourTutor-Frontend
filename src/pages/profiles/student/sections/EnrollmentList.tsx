@@ -24,7 +24,7 @@ export default function EnrollmentList() {
 
  if (loading)
    return (
-     <div className="flex justify-center items-center py-20">
+     <div className="flex justify-center items-center py-20 min-h-[80vh]">
        <Loader2 className="w-8 h-8 text-teal-500 animate-spin" />
      </div>
    );

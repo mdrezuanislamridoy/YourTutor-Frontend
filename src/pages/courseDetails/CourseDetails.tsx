@@ -6,15 +6,17 @@ import {
   FaBookOpen,
   FaCheckCircle,
 } from "react-icons/fa";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axiosInstance from "../../lib/axiosInstance";
+import { UserStore } from "../../store/user.store";
 
 const CourseDetails = () => {
   const { id } = useParams();
   const [activeTab, setActiveTab] = useState("About");
   const [loading, setLoading] = useState(true);
-
+  const navigate = useNavigate();
   const [course, setCourse] = useState<any>({});
+  const { user } = UserStore();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -23,6 +25,8 @@ const CourseDetails = () => {
   const fetchCourse = async () => {
     try {
       const getCourse = await axiosInstance.get(`/course/${id}`);
+      console.log(getCourse);
+
       setCourse(getCourse.data.course || []);
     } catch (error) {
       console.log(error);
@@ -110,6 +114,16 @@ const CourseDetails = () => {
       default:
         return null;
     }
+  };
+
+  const handleEnroll = () => {
+    if (!user) {
+      navigate("/login");
+      return;
+    }
+    if (user.role !== "student") return;
+
+    navigate(`/enrollment/${course._id}`);
   };
 
   if (loading) {
@@ -228,7 +242,10 @@ const CourseDetails = () => {
                   </span>
                 </div>
 
-                <button className="w-full py-3 bg-teal-600 text-white font-bold text-lg rounded-lg hover:bg-teal-700 transition shadow-md">
+                <button
+                  onClick={handleEnroll}
+                  className="w-full py-3 bg-teal-600 text-white font-bold text-lg rounded-lg hover:bg-teal-700 transition shadow-md"
+                >
                   Enroll Now
                 </button>
 
