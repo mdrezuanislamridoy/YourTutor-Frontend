@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import axiosInstance from "../../../lib/axiosInstance";
 
 export default function Success() {
@@ -21,6 +21,7 @@ export default function Success() {
     <div>
       <h1>Success</h1>
       <p>{enrollment?.message}</p>
+      <Link to="/profile">Go To dashboard</Link>
     </div>
   );
 }

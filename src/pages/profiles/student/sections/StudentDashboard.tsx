@@ -5,13 +5,13 @@ import {
   FaUserCircle,
   FaBook,
   FaTrophy,
-  FaStar,
-  FaPlayCircle,
   FaChevronRight,
   FaCheckCircle,
 } from "react-icons/fa";
 import axiosInstance from "../../../../lib/axiosInstance";
 import { UserStore } from "../../../../store/user.store";
+import { Link } from "react-router-dom";
+import EnrollmentCard from "../../../../components/EnrollmentCard";
 
 const StudentDashboard = () => {
   const { user } = UserStore();
@@ -49,7 +49,6 @@ const StudentDashboard = () => {
 
   return (
     <div className="p-4 md:p-8 bg-gray-50 min-h-screen">
-      {/* Header */}
       <header className="mb-8 p-6 bg-white rounded-xl shadow-lg border-t-4 border-teal-500">
         <div className="flex justify-between items-center">
           <h1 className="text-3xl font-extrabold text-gray-900">
@@ -62,14 +61,15 @@ const StudentDashboard = () => {
         </p>
       </header>
 
-      {/* Stats */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         <div className="bg-white p-5 rounded-xl shadow-md flex items-center space-x-4 border-l-4 border-blue-500">
-          <FaBook className="w-8 h-8 text-blue-500" />
-          <div>
-            <p className="text-2xl font-bold text-gray-800">{totalCourses}</p>
-            <h3 className="text-sm text-gray-500">Enrolled Courses</h3>
-          </div>
+          <Link to={`/enrollment-list`}>
+            <FaBook className="w-8 h-8 text-blue-500" />
+            <div>
+              <p className="text-2xl font-bold text-gray-800">{totalCourses}</p>
+              <h3 className="text-sm text-gray-500">Enrolled Courses</h3>
+            </div>
+          </Link>
         </div>
 
         <div className="bg-white p-5 rounded-xl shadow-md flex items-center space-x-4 border-l-4 border-green-500">
@@ -106,7 +106,6 @@ const StudentDashboard = () => {
         </div>
       </div>
 
-      {/* Courses In Progress */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2 space-y-6">
           <h2 className="text-2xl font-bold text-gray-800 border-b pb-2">
@@ -117,26 +116,7 @@ const StudentDashboard = () => {
               <p className="text-gray-500 col-span-2">Loading courses...</p>
             ) : enrollments.length > 0 ? (
               enrollments.map((course) => (
-                <div
-                  key={course._id}
-                  className="bg-white p-4 rounded-lg shadow-md border border-gray-100 hover:shadow-lg flex flex-col justify-between transition"
-                >
-                  <div>
-                    <h3 className="text-lg font-semibold text-gray-800 mb-2 truncate">
-                      {course.courseId?.title}
-                    </h3>
-                    <div className="flex items-center text-sm text-gray-500 mb-2">
-                      <FaStar className="w-3 h-3 text-yellow-500 mr-1" />
-                      {course.courseId?.rating || 0} Rating
-                    </div>
-                    <ProgressBar
-                      percentage={course.progress?.percentage || 0}
-                    />
-                  </div>
-                  <button className="mt-3 w-full flex items-center justify-center py-2 bg-teal-600 text-white text-sm font-medium rounded-md hover:bg-teal-700 transition">
-                    <FaPlayCircle className="mr-2" /> Continue Course
-                  </button>
-                </div>
+                <EnrollmentCard enrollment={course} />
               ))
             ) : (
               <p className="text-gray-500 col-span-2">
