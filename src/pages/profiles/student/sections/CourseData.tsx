@@ -46,7 +46,6 @@ export default function CourseData() {
   return (
     <div className="w-full min-h-screen bg-gray-50">
       <div className="flex flex-col md:flex-row gap-6 p-4 md:p-8">
-    
         <div className="w-full md:w-[70%]">
           <div className="rounded-lg overflow-hidden shadow-md bg-black">
             {currentVideo ? (
@@ -65,12 +64,10 @@ export default function CourseData() {
             )}
           </div>
 
-          {/* ---------- Title ---------- */}
           <h1 className="text-2xl font-semibold mt-4 text-gray-800">
             {course.courseId?.title}
           </h1>
 
-          {/* ---------- Expandable Description ---------- */}
           <div className="mt-3 bg-white rounded-lg shadow-sm p-4 border">
             <div
               onClick={() => setShowDescription(!showDescription)}
@@ -102,7 +99,6 @@ export default function CourseData() {
                   key={mod._id}
                   className="border rounded-lg overflow-hidden"
                 >
-                 
                   <button
                     onClick={() =>
                       setActiveModule(activeModule === index ? null : index)
