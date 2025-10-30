@@ -32,7 +32,10 @@ export default function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/auth" element={user ? <Navigate to={"/"} /> : <Auth />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route
+          path="/profile"
+          element={user ? <Profile /> : <Navigate to="/auth" />}
+        />
         <Route path="/course" element={<Course />} />
         <Route path="/courses" element={<CoursesPage />} />
         <Route path="/enrollment/:id" element={<Enrollment />} />
