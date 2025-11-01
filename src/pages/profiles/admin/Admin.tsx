@@ -29,6 +29,7 @@ import Students from "./sections/Students";
 import Products from "./sections/Products";
 import { UserPlus } from "lucide-react";
 import AddMentorToCourse from "./sections/AddMentorToCourse";
+import AddModule from "./sections/AddModule";
 
 export default function Admin() {
   const [selectedSection, setSelectedSection] = React.useState("dashboard");
@@ -80,6 +81,11 @@ export default function Admin() {
       selection: "coupon-manager",
       icon: RiCouponFill,
     },
+    {
+      title: "Add Module",
+      selection: "add-module",
+      icon: RiCouponFill,
+    },
   ];
 
   const renderSection = () => {
@@ -110,6 +116,8 @@ export default function Admin() {
         return <CategoryManage />;
       case "coupon-manager":
         return <CouponManage />;
+      case "add-module":
+        return <AddModule />;
       default:
         return null;
     }
