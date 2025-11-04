@@ -12,7 +12,7 @@ export const CourseCard = ({ course }: any) => {
 
   const priceText = course.isFree
     ? "FREE"
-    : `$${parseFloat(course.price).toFixed(2)}`;
+    : `৳${parseFloat(course.price).toFixed(2)}`;
 
   // Enroll button redirects to enrollment page
   const handleEnroll = () => {
@@ -41,8 +41,9 @@ export const CourseCard = ({ course }: any) => {
     if (!window.confirm("Are you sure you want to delete this course?")) return;
 
     const result = await axiosInstance.put(`/course/delete/${course._id}`);
-    if (result) {
-      navigate("/courses");
+
+    if (result.data.success) {
+      window.location.reload();
     }
   };
 

@@ -45,7 +45,6 @@ export default function Admin() {
   const sections = [
     { title: "Dashboard", selection: "dashboard", icon: FaTachometerAlt },
     { title: "Courses", selection: "courses", icon: FaBook },
-    { title: "Product", selection: "products", icon: FaShoppingBag },
     {
       title: "Mentor Requests",
       selection: "mentor-requests",
@@ -100,8 +99,6 @@ export default function Admin() {
         return <MentorRequests />;
       case "courses":
         return <Courses />;
-      case "products":
-        return <Products />;
       case "blocked-account":
         return <BlockedAccount />;
       case "rejected-mentors":

@@ -128,10 +128,6 @@ export default function AddCourseModal({
         }
       );
 
-      if (!res.data.success) {
-        throw new Error("Failed to add course.");
-      }
-      
       onCourseAdded();
       onClose();
     } catch (error: any) {
