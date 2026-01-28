@@ -120,13 +120,13 @@ export default function AddCourseModal({
       submissionData.append("forWhom", forWM);
       submissionData.append("whatYouWillLearn", whatWL);
 
-      const res = await axiosInstance.post<{ success: boolean }>(
-        "/course/create-course",
-        submissionData,
-        {
-          headers: { "Content-Type": "multipart/form-data" },
-        }
-      );
+      // const res = await axiosInstance.post<{ success: boolean }>(
+      //   "/course/create-course",
+      //   submissionData,
+      //   {
+      //     headers: { "Content-Type": "multipart/form-data" },
+      //   }
+      // );
 
       onCourseAdded();
       onClose();
