@@ -40,9 +40,7 @@ export default function Login() {
       <h4 className="text-xl font-semibold text-gray-800 mb-6">
         Welcome to YourTutor
       </h4>
-      <i className="bg-gray-100">
-        Example Admin Acc :<br /> abcd1234@gmail.com ,<br /> password : abcd1234
-      </i>
+    
       <br />
       <br />
 
