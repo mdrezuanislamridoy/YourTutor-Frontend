@@ -12,7 +12,6 @@ import {
   FaBan,
   FaUser,
   FaUsersSlash,
-  FaShoppingBag,
 } from "react-icons/fa";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { GiTargetPoster, GiTeacher } from "react-icons/gi";
@@ -26,7 +25,6 @@ import CouponManage from "./sections/CouponManage";
 import SidebarItem from "./components/SidebarItems";
 import Mentors from "./sections/Mentors";
 import Students from "./sections/Students";
-import Products from "./sections/Products";
 import { UserPlus } from "lucide-react";
 import AddMentorToCourse from "./sections/AddMentorToCourse";
 import AddModule from "./sections/AddModule";
